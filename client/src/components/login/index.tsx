@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
-import { View, Text, Button } from '@tarojs/components'
-
+import { View, Text, Button, Image } from '@tarojs/components'
+import './index.scss'
 export default class Index extends Component {
   state = {
     context: {}
@@ -32,8 +32,10 @@ export default class Index extends Component {
 
   render() {
     return (
-      <View className='index'>
-        <Button onClick={this.getLogin}>获取登录云函数</Button>
+      <View className='userInfo'>
+        <Button onClick={this.getLogin}>获4取登32录55云函2数1</Button>
+        <Image src=''></Image>
+        <View>点击登录</View>
         <Text>context：{JSON.stringify(this.state.context)}</Text>
       </View>
     )

@@ -1,26 +1,28 @@
-import React, { Component } from 'react'
-import Taro, { Config } from '@tarojs/taro'
+import React, { Component } from "react";
+import Taro, { Config } from "@tarojs/taro";
 
-import './app.scss'
+import "./app.scss";
 
 class App extends Component {
+	componentDidMount() {
+		if (process.env.TARO_ENV === "weapp") {
+			Taro.cloud.init({
+				env: "env-1gy0ivir5e756d6a",
+				traceUser: true
+			});
+		}
+	}
 
-  componentDidMount () {
-    if (process.env.TARO_ENV === 'weapp') {
-      Taro.cloud.init()
-    }
-  }
+	componentDidShow() {}
 
-  componentDidShow () {}
+	componentDidHide() {}
 
-  componentDidHide () {}
+	componentDidCatchError() {}
 
-  componentDidCatchError () {}
-
-  // this.props.children 是将要会渲染的页面
-  render () {
-    return this.props.children
-  }
+	// this.props.children 是将要会渲染的页面
+	render() {
+		return this.props.children;
+	}
 }
 
-export default App
+export default App;
