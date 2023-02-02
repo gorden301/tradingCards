@@ -4,6 +4,7 @@ export default {
 		"pages/service/index",
 		"pages/test/index",
 		"pages/userCenter/index",
+		"pages/register/index"
 	],
 	window: {
 		backgroundTextStyle: "light",
