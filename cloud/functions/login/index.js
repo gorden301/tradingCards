@@ -24,7 +24,7 @@ exports.main = async (event = {}, context = {}) => {
 	console.log('dbUserList', dbUserList)
 	// 获取 WX Context (微信调用上下文)，包括 OPENID、APPID、及 UNIONID（需满足 UNIONID 获取条件）等信息
 	const wxContext = cloud.getWXContext();
-	if (dbUserList.length === 0) {
+	if (dbUserList.length === 0 && !event.searchUser) {
 		const addResult = await userListCollection.add({
 			data: {
 				...event,
@@ -48,17 +48,17 @@ exports.main = async (event = {}, context = {}) => {
 				msg: '插入失败',
 			}
 		}
-		// .then(async res => {
-		// })
 	} else {
 		const { data: haveCurrentUser } = await userListCollection.where({ openid: wxContext.OPENID }).get()
 		if (haveCurrentUser.length > 0) {
 			console.log("当前微信用户已存在")
 			return {
-				code: -1,
-				msg: "当前微信用户已存在！",
+				code: 1,
+				data: haveCurrentUser,
+				msg: "登录成功",
 			}
 		} else {
+			if(event.searchUser) return { code: 0 }
 			const addResult = await userListCollection.add({
 				data: {
 					...event,
@@ -84,11 +84,4 @@ exports.main = async (event = {}, context = {}) => {
 			}
 		}
 	}
-	// return {
-	// 	event,
-	// 	openid: wxContext.OPENID,
-	// 	appid: wxContext.APPID,
-	// 	unionid: wxContext.UNIONID,
-	// 	env: wxContext.ENV,
-	// };
 };
