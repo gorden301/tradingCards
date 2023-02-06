@@ -11,7 +11,7 @@
       "list": [
         {
           "name": "",
-          "pathName": "pages/userCenter/index",
+          "pathName": "pages/user/userCenter/index",
           "query": "",
           "launchMode": "default",
           "scene": null

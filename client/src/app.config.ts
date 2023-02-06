@@ -3,7 +3,8 @@ export default {
 		"pages/home/index",
 		"pages/service/index",
 		"pages/test/index",
-		"pages/userCenter/index",
+		"pages/user/userCenter/index",
+		"pages/user/userInfo/index",
 		"pages/register/index"
 	],
 	window: {
@@ -36,7 +37,7 @@ export default {
 				selectedIconPath: "./assets/user/tab3_a.png",
 			},
 			{
-				pagePath: "pages/userCenter/index",
+				pagePath: "pages/user/userCenter/index",
 				text: "我的",
 				iconPath: "./assets/user/tab4.png",
 				selectedIconPath: "./assets/user/tab4_a.png",
