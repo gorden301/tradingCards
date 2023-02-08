@@ -5,7 +5,9 @@ export default {
 		"pages/test/index",
 		"pages/user/userCenter/index",
 		"pages/user/userInfo/index",
-		"pages/register/index"
+		"pages/register/index",
+		"pages/service/pages/grade/index",
+		"pages/service/pages/sellCard/index",
 	],
 	window: {
 		backgroundTextStyle: "light",

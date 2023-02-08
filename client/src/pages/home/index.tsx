@@ -6,7 +6,26 @@ import Sell from '@/assets/logo/sell.png'
 import Level from '@/assets/logo/level.png'
 import './index.scss'
 
+// 服务跳转配置map
+const goServiceConfig = {
+    "grade": () => {
+        Taro.navigateTo({
+            url: '/pages/service/pages/grade/index'
+        })
+    },
+    "sellCard": () => {
+        Taro.navigateTo({
+            url: '/pages/service/pages/sellCard/index'
+        })
+    },
+    "default": () => { return }
+}
+
 const Home: React.FC<{}> = () => {
+    // 跳转不同服务
+    const goService = (type: string) => {
+        goServiceConfig[type] ? goServiceConfig[type]() : goServiceConfig['default']()
+    }
     const getUserInfo = () => {
         Taro.cloud.callFunction({
             name: 'login',
@@ -33,11 +52,11 @@ const Home: React.FC<{}> = () => {
         <View className="home">
             <Banner></Banner>
             <View className="guide_module">
-                <View className="item">
+                <View className="item" onClick={() => goService('grade')}>
                     <Image src={Level}></Image>
                     <View>我要评级</View>
                 </View>
-                <View className="item">
+                <View className="item" onClick={() => goService('grade')}>
                     <Image src={Sell}></Image>
                     <View>我要代卖</View>
                 </View>
