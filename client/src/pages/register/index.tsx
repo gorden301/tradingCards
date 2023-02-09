@@ -39,7 +39,7 @@ const Register: React.FC<{}> = () => {
             <Form onSubmit={submitRegister}>
                 <View className="register_row">
                     <Text>昵称</Text>
-                    <Input name="nickName" maxLength="12" type="nickname" placeholder="请输入您的昵称"></Input>
+                    <Input name="nickName" maxlength={12} type="nickname" placeholder="请输入您的昵称"></Input>
                 </View>
                 <View className="register_row">
                     <Text>手机</Text>
