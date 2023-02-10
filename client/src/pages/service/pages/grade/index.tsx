@@ -66,11 +66,13 @@ const Grade: React.FC<{}> = () => {
                 name: 'order',
                 data: {
                     $url: 'createOrder',
-                    // 1: 评级 2: 代卖
-                    orderType: 1,
-                    cardImgs: fileIds,
-                    ...userInfo,
-                    ...orderParam
+                    createData: {
+                        // 1: 评级 2: 代卖
+                        orderType: 1,
+                        cardImgs: fileIds,
+                        ...userInfo,
+                        ...orderParam
+                    }
                 }
             })
             if (createRes?.result?.code == 0) {

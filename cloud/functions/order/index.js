@@ -9,16 +9,14 @@ const orderListCollection = db.collection('orderList')
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-	debugger
 	const wxContext = cloud.getWXContext()
 	const app = new TcbRouter({ event })
 	app.router(
 		'createOrder',
 		async (ctx, next) => {
-			debugger
 			const createRes = await orderListCollection.add({
 				data: {
-					...event,
+					...event.createData,
 					createTime: db.serverDate()
 				}
 			})
