@@ -59,6 +59,8 @@ const Grade: React.FC<{}> = () => {
         if (isAllUploadSuccess) {
             console.log('上传图片成功')
             const userInfo = Taro.getStorageSync('userInfo')
+            // userInfo的_id标识不用传，不然会覆盖数据库的自创的_id
+            delete userInfo._id
             const fileIds = upRes.map(item => {
                 return item[0].fileID
             })

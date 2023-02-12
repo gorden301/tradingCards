@@ -34,6 +34,11 @@ const UserCenter: React.FC<{}> = () => {
             }
         }
     }
+    const goUserOrder = () => {
+        Taro.navigateTo({
+            url: '/pages/user/userOrder/index'
+        })
+    }
     return (
         <View>
             <View>
@@ -45,6 +50,10 @@ const UserCenter: React.FC<{}> = () => {
                             <View style="color: #ffffff;">{Taro.getStorageSync('userInfo')?.nickName}</View>
                         </View>
                 }
+                <View>
+                    <View onClick={goUserOrder}>我的评级订单</View>
+                    <View>我的代卖订单</View>
+                </View>
             </View>
             {/* <Login></Login> */}
         </View>
