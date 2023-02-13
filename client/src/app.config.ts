@@ -6,9 +6,10 @@ export default {
 		"pages/user/userCenter/index",
 		"pages/user/userInfo/index",
 		"pages/user/userOrder/index",
+		"pages/user/userAddress/index",
 		"pages/register/index",
 		"pages/service/pages/grade/index",
-		"pages/service/pages/sellCard/index",
+		"pages/service/pages/sellCard/index"
 	],
 	window: {
 		backgroundTextStyle: "light",
