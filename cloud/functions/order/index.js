@@ -51,5 +51,17 @@ exports.main = async (event, context) => {
 			}
 		}
 	)
+	// 获取所有订单
+	app.router(
+		'getOrderList',
+		async (ctx, next) => {
+			const orderListRes = await orderListCollection.get()
+			ctx.body = {
+				data: orderListRes.data,
+				code: 0,
+				msg: '获取成功'
+			}
+		}
+	)
 	return app.serve()
 }
