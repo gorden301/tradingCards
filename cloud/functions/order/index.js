@@ -45,7 +45,7 @@ exports.main = async (event, context) => {
 				openid: wxContext.OPENID
 			}).get()
 			ctx.body = {
-				data: orderListRes?.data,
+				data: orderListRes.data,
 				code: 0,
 				msg: '获取成功'
 			}
