@@ -15,3 +15,17 @@ export function uploadCloudImage({ cloudPath, filePath }: { cloudPath: string, f
         })
     })
 }
+
+export function getTempalteUrl(fileList) {
+    return new Promise((resolve) => {
+        Taro.cloud.getTempFileURL({
+            fileList,
+            success: (res) => {
+                resolve(res)
+            },
+            fail: (err) => {
+                resolve(err)
+            }
+        })
+    })
+}

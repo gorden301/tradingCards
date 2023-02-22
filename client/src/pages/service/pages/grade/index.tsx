@@ -3,7 +3,7 @@ import { useState } from "react"
 import BaseWrap from "@/components/baseWrap"
 import { gradeConfigs } from "./gradeConfig"
 import UploadImg from '@/assets/logo/upload.png'
-import { uploadCloudImage } from "@/utils/uploadFile"
+import { uploadCloudImage, getTempalteUrl } from "@/utils/uploadFile"
 import './index.scss'
 import Taro from "@tarojs/taro"
 
@@ -64,6 +64,7 @@ const Grade: React.FC<{}> = () => {
             const fileIds = upRes.map(item => {
                 return item[0].fileID
             })
+            const fileRes: any = await getTempalteUrl(fileIds)
             const createRes: any = await Taro.cloud.callFunction({
                 name: 'order',
                 data: {
@@ -72,6 +73,7 @@ const Grade: React.FC<{}> = () => {
                         // 1: 评级 2: 代卖
                         orderType: 1,
                         cardImgs: fileIds,
+                        fileList: fileRes?.fileList,
                         ...userInfo,
                         ...orderParam
                     }
