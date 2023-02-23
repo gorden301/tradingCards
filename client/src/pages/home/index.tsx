@@ -45,7 +45,7 @@ const Home: React.FC<{}> = () => {
         })
     }
     useEffect(() => {
-        getUserInfo()
+        // getUserInfo()
         getMusicInfo()
     }, [])
     return (

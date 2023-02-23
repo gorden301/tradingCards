@@ -1,7 +1,7 @@
 import { Image, View, Button } from "@tarojs/components"
 import DefaultAvatar from '@/assets/user/tab4.png'
 import Taro from "@tarojs/taro"
-import { uploadCloudImage } from "@/utils/uploadFile"
+import { uploadCloudImage, getTempalteUrl } from "@/utils/uploadFile"
 import './index.scss'
 import { useState } from "react"
 
@@ -23,17 +23,20 @@ const UserInfo: React.FC<{}> = () => {
         })
         if(!err) {
             const { fileID } = uploadRes
+            const fileRes: any = await getTempalteUrl([fileID])
             const updateUserRes: any = await Taro.cloud.callFunction({
                 name: 'user',
                 data: {
                     $url: 'updateUserAvatar',
-                    avatar: fileID
+                    avatar: fileID,
+                    avatarHttpsUrl: fileRes?.fileList[0]?.tempFileURL
                 }
             })
             if(updateUserRes?.result?.code == 0) {
                 Taro.setStorageSync('userInfo', {
                     ...userInfo,
-                    avatar: fileID
+                    avatar: fileID,
+                    avatarHttpsUrl: fileRes?.fileList[0]?.tempFileURL
                 })
                 setUserInfo({
                     ...userInfo,

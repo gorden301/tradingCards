@@ -33,7 +33,7 @@ const Register: React.FC<{}> = () => {
           	console.log('客户端login结果', res)
         })
     }
-    
+
     return (
         <View className="register">
             <Form onSubmit={submitRegister}>

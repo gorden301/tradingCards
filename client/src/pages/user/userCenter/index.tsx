@@ -55,7 +55,7 @@ const UserCenter: React.FC<{}> = () => {
         <View className="wrap">
             <View>
                 {
-                    !userInfo._id ? <View className="userCenter"><Image className="avatar" src={DefaultAvatar}></Image>
+                    !(userInfo._id || userInfo.nickName) ? <View className="userCenter"><Image className="avatar" src={DefaultAvatar}></Image>
                         <Button className="login_btn" size="mini" onClick={goRegisterOrLogin}>点击登录/注册</Button></View> :
                         <View className="userCenter" onClick={goEditUser}>
                             <Image className="avatar" src={userInfo?.avatar || DefaultAvatar}></Image>

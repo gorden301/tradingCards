@@ -19,7 +19,8 @@ exports.main = async (event, context) => {
         openid: wxContext.OPENID
       }).update({
         data: {
-          avatar: event.avatar
+          avatar: event.avatar,
+          avatarHttpsUrl: event.avatarHttpsUrl
         }
       })
       ctx.body = {
