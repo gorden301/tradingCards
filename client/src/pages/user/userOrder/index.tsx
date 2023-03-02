@@ -4,6 +4,7 @@ import PsaLogo from "@/assets/logo/psa.png"
 import './index.scss'
 import { useEffect, useState } from "react"
 import Taro from "@tarojs/taro"
+import { formatDateTime } from "@/utils/format"
 
 const orderStatus = {
     1: '待客服确认'
@@ -45,7 +46,7 @@ const UserOrder: React.FC<{}> = () => {
                         </View>
                     </View>
                     <View className="footer">
-                        <View>{item.createTime}</View>
+                        <View>{formatDateTime(item.createTime)}</View>
                         <View>总计：200元</View>
                     </View>
                 </View>)}

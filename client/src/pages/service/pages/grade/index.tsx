@@ -43,6 +43,10 @@ const Grade: React.FC<{}> = () => {
         })
     }
     const orderSubmit = async (e) => {
+        Taro.showLoading({
+            title: '订单提交中...',
+            mask: true
+        })
         const orderParam = e.detail.value
         let promiseArr: any = []
         uploadImgArr.forEach(item => {
@@ -74,11 +78,11 @@ const Grade: React.FC<{}> = () => {
                         orderType: 1,
                         cardImgs: fileIds,
                         fileList: fileRes?.fileList,
-                        ...userInfo,
                         ...orderParam
                     }
                 }
             })
+            Taro.hideLoading()
             if (createRes?.result?.code == 0) {
                 Taro.showToast({
                     title: '创建订单成功',
@@ -92,6 +96,9 @@ const Grade: React.FC<{}> = () => {
                     duration: 2000
                 })
             }
+            Taro.reLaunch({
+                url: '/pages/home/index'
+            })
         }
         console.log('提交订单', e)
     }
