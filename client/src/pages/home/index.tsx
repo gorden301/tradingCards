@@ -56,7 +56,7 @@ const Home: React.FC<{}> = () => {
                     <Image src={Level}></Image>
                     <View>我要评级</View>
                 </View>
-                <View className="item" onClick={() => goService('grade')}>
+                <View className="item" onClick={() => goService('sellCard')}>
                     <Image src={Sell}></Image>
                     <View>我要代卖</View>
                 </View>

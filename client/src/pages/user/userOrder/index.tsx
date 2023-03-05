@@ -7,7 +7,12 @@ import Taro from "@tarojs/taro"
 import { formatDateTime } from "@/utils/format"
 
 const orderStatus = {
-    1: '待客服确认'
+    1: "订单待确认",
+	2: "订单已确认",
+	3: "评级已寄出",
+	4: "评级已出分",
+	5: "评级回途中",
+	6: "订单已完成"
 }
 const UserOrder: React.FC<{}> = () => {
     const [orderList, setOrderList] = useState([])
