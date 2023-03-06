@@ -3,18 +3,19 @@ import { useState } from "react"
 import BaseWrap from "@/components/baseWrap"
 import UploadImg from '@/assets/logo/upload.png'
 import { uploadCloudImage, getTempalteUrl } from "@/utils/uploadFile"
-import { sellType } from "./constant"
+import { sellTypes, sellDays } from "./constant"
 import './index.scss'
 import Taro from "@tarojs/taro"
 
 const MAX_IMG_NUMBER: number = 6
 const SellCard: React.FC<{}> = () => {
     const [gradeConfig, setGradeConfig] = useState<any>('')
-    const [gradeSpeed, setGradeSpeed] = useState<string>('')
+    // 代卖模式
+    const [sellType, setSellType] = useState<any>('')
     const [uploadImgArr, setUploadImgArr] = useState<string[]>([])
-    const chooseGradeLevel = (e: any) => {
-        const speedType = e?.detail?.value
-        setGradeSpeed(speedType)
+    const chooseSellType = (e: any) => {
+        const sellType = e?.detail?.value
+        setSellType(sellType)
     }
     const chooseSellWay = (e: any) => {
         const companyType = e?.detail?.value
@@ -75,7 +76,7 @@ const SellCard: React.FC<{}> = () => {
                     $url: 'createOrder',
                     createData: {
                         // 1: 评级 2: 代卖
-                        orderType: 1,
+                        orderType: 2,
                         cardImgs: fileIds,
                         fileList: fileRes?.fileList,
                         ...orderParam
@@ -124,8 +125,8 @@ const SellCard: React.FC<{}> = () => {
                         <View>
                             <View className="margin-b20">2.选择代卖模式</View>
                             <View>
-                                <RadioGroup onChange={chooseGradeLevel} name='gradeLevel'>
-                                    {sellType.map((item: any, index: number) => {
+                                <RadioGroup onChange={chooseSellType} name='sellType'>
+                                    {sellTypes.map((item: any, index: number) => {
                                         return (
                                             <View className="margin-b20">
                                                 <Radio key={index} value={item.value}>
@@ -138,13 +139,32 @@ const SellCard: React.FC<{}> = () => {
                             </View>
                         </View>
                     </View>
-                    <View className="wrapper-module">
+                    {sellType && <View className="wrapper-module">
+                        <View>
+                            <View className="margin-b20">{ sellType == 1 ? '拍卖天数' : '期望价格' }</View>
+                            <View>
+                                {sellType && sellType ==1 && <RadioGroup name='sellDays'>
+                                    {sellDays.map((item: any, index: number) => {
+                                        return (
+                                            <View className="margin-b20">
+                                                <Radio key={index} value={item.value}>
+                                                    <View className="margin-l20">{item.label}</View>
+                                                </Radio>
+                                            </View>
+                                        )
+                                    })}
+                                    {sellType && sellType != 1 && <Input name='hopePrice' type="number" placeholder="请输入期望价格(必填,人民币)"></Input>}
+                                </RadioGroup>}
+                            </View>
+                        </View>
+                    </View>}
+                    {sellType && <View className="wrapper-module">
                         <View className="margin-b20">3.填写基础信息</View>
                         <View>
-                            <View className="register_row">
-                                <Text>卡片数量</Text>
-                                <Input name='cardNumber' maxlength={2} type="number" placeholder="请输入卡片数量(必填)"></Input>
-                            </View>
+                            {sellType && sellType != 1 && <View className="register_row">
+                                <Text>期望价格</Text>
+                                <Input name='hopePrice' type="number" placeholder="请输入期望价格(必填,人民币)"></Input>
+                            </View>}
                             <View className="register_row">
                                 <Text>快递公司</Text>
                                 <Input name='deliveryCompany' type="text" maxlength={8} placeholder="请输入快递公司(选填)"></Input>
@@ -158,8 +178,8 @@ const SellCard: React.FC<{}> = () => {
                                 <Textarea name='comment' className="comment" maxlength={100} placeholder="对卡片的描述或者注意事项"></Textarea>
                             </View>
                         </View>
-                    </View>
-                    <View className="wrapper-module">
+                    </View>}
+                    {sellType && <View className="wrapper-module">
                         <View className="margin-b20">4.图片上传</View>
                         <View className="imgs-wrapper">
                             {uploadImgArr.length > 0 && uploadImgArr.map((item: string, index: number) => <View key={index} className="item_wrapper">
@@ -168,7 +188,7 @@ const SellCard: React.FC<{}> = () => {
                             </View>)}
                             {uploadImgArr.length < MAX_IMG_NUMBER && <Image className="uploadImg" src={UploadImg} onClick={chooseImg}></Image>}
                         </View>
-                    </View>
+                    </View>}
                 </View>
                 <View className="orderBtn">
                     <Button className="btn" formType="submit">提交订单</Button>
