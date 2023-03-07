@@ -1,0 +1,17 @@
+.detail-wrap {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    background-color: #fff;
+    .module {
+        display: flex;
+        margin-bottom: 50px;
+        .txt {
+            margin-right: 30px;
+        }
+        .img {
+            width: 100px;
+            height: 100px;
+        }
+    }
+}

@@ -5,15 +5,8 @@ import './index.scss'
 import { useEffect, useState } from "react"
 import Taro from "@tarojs/taro"
 import { formatDateTime } from "@/utils/format"
+import { orderType, orderStatus } from "./constant"
 
-const orderStatus = {
-    1: "订单待确认",
-	2: "订单已确认",
-	3: "评级已寄出",
-	4: "评级已出分",
-	5: "评级回途中",
-	6: "订单已完成"
-}
 const UserOrder: React.FC<{}> = () => {
     const [orderList, setOrderList] = useState([])
     const getOrderList = async () => {
@@ -33,13 +26,19 @@ const UserOrder: React.FC<{}> = () => {
             })
         }
     }
+    const goDetail = (item) => {
+        console.log(item)
+        Taro.navigateTo({
+            url: `/pages/user/userOrder/orderDetail/index?item=${JSON.stringify(item)}`
+        })
+    }
     useEffect(() => {
         getOrderList()
     }, [])
     return (
         <BaseWrap>
             <View className="userOrder">
-                {orderList && orderList.length > 0 && orderList.map((item: any, index: number) => <View key={index} className="order_module">
+                {orderList && orderList.length > 0 && orderList.map((item: any, index: number) => <View onClick={() => goDetail(item)} key={index} className="order_module">
                     <View className="header">
                         <View>订单状态:</View>
                         <View>{orderStatus[item.orderStatus]}</View>
@@ -52,7 +51,7 @@ const UserOrder: React.FC<{}> = () => {
                     </View>
                     <View className="footer">
                         <View>{formatDateTime(item.createTime)}</View>
-                        <View>总计：200元</View>
+                        <View>订单类型：{orderType[item.orderType]}</View>
                     </View>
                 </View>)}
             </View>

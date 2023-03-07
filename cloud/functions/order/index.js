@@ -25,6 +25,7 @@ exports.main = async (event, context) => {
                 avatarHttpsUrl: haveCurrentUser[0].avatarHttpsUrl,
                 phoneNumer: haveCurrentUser[0].phoneNumer,
                 createTime: db.serverDate(),
+                openid: wxContext.OPENID,
             },
         });
         if (createRes._id) {
@@ -45,6 +46,7 @@ exports.main = async (event, context) => {
     // 获取某用户订单
     app.router("getOrderListByOpenid", async (ctx, next) => {
         const orderListRes = await orderListCollection
+            .orderBy("createTime", "desc")
             .where({
                 openid: wxContext.OPENID,
             })

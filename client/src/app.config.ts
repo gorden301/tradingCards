@@ -7,6 +7,7 @@ export default {
 		"pages/user/userInfo/index",
 		"pages/user/userOrder/index",
 		"pages/user/userAddress/index",
+        "pages/user/userOrder/orderDetail/index",
 		"pages/register/index",
 		"pages/service/pages/grade/index",
 		"pages/service/pages/sellCard/index"
