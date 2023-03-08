@@ -81,7 +81,7 @@ const UserOrder: React.FC<{}> = () => {
     return (
         <BaseWrap scrolltolower={reachBotoom}>
             <View className="userOrder">
-                <View className="header">
+                <View className="headers">
                     <View className={`item ${orderType == 1 ? 'active' : ''}`} onClick={() => { changeOrder(1) }}>全部订单</View>
                     <View className={`item ${orderType == 2 ? 'active' : ''}`} onClick={() => { changeOrder(2) }}>评级订单</View>
                     <View className={`item ${orderType == 3 ? 'active' : ''}`} onClick={() => { changeOrder(3) }}>代卖订单</View>
