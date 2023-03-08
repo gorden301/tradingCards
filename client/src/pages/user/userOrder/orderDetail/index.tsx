@@ -22,6 +22,11 @@ const OrderDetail: React.FC<{}> = () => {
             urls: uploadImgArr
         })
     }
+    const goEbay = (url: string) => {
+        Taro.navigateTo({
+            url: `/pages/webView/index?url=${url}`
+        })
+    }
     useEffect(() => {
         initData()
         console.log(JSON.parse(router?.params.item as string))
@@ -72,6 +77,10 @@ const OrderDetail: React.FC<{}> = () => {
                 {data?.customerComment && <View className="module">
                     <View className="txt">客服留言:</View>
                     <View>{data?.customerComment}</View>
+                </View>}
+                {data?.sellNumber && <View className="module">
+                    <View className="txt">已上架链接:</View>
+                    <View className="url" onClick={() => goEbay(`https://www.ebay.com/itm/${data?.sellNumber}`)}>{`https://www.ebay.com/itm/${data?.sellNumber}`}</View>
                 </View>}
             </View>
         </BaseWrap>

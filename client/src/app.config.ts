@@ -10,7 +10,8 @@ export default {
         "pages/user/userOrder/orderDetail/index",
 		"pages/register/index",
 		"pages/service/pages/grade/index",
-		"pages/service/pages/sellCard/index"
+		"pages/service/pages/sellCard/index",
+		"pages/webView/index"
 	],
 	window: {
 		backgroundTextStyle: "light",
