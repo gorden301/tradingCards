@@ -43,7 +43,7 @@ const BaseWrap: React.FC<IBaseWrap> = ({
     customBodyClassName,
     customClassName,
     onPullRefresh,
-    scrolltolower,
+    scrolltolower = () => {},
     renderFooter,
     renderHeader,
     lowerThreshold = 20,
@@ -80,7 +80,7 @@ const BaseWrap: React.FC<IBaseWrap> = ({
                     // scrollTop={scrollTop}
                     lowerThreshold={lowerThreshold}
                     onScroll={onScroll}
-                    // onScrolltolower={scrolltolower}
+                    onScrollToLower={scrolltolower}
                 >
                     {children}
                 </ScrollView>

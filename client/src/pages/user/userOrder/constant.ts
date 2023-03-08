@@ -1,4 +1,4 @@
-const orderType = {
+const orderTypes = {
     1: "评级",
     2: "代卖",
 };
@@ -18,4 +18,4 @@ const sellType = {
 	3: "一口价"
 }
 
-export { orderType, orderStatus, sellType };
+export { orderTypes, orderStatus, sellType };
