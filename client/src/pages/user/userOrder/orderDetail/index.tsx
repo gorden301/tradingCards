@@ -3,7 +3,7 @@ import Taro, { useRouter } from "@tarojs/taro"
 import { useEffect, useState } from "react"
 import BaseWrap from "@/components/baseWrap"
 import { formatDateTime } from "@/utils/format"
-import { orderType, orderStatus, sellType } from "../constant"
+import { orderTypes, orderStatus, sellType } from "../constant"
 import './index.scss'
 
 const OrderDetail: React.FC<{}> = () => {
@@ -31,7 +31,7 @@ const OrderDetail: React.FC<{}> = () => {
             <View className="detail-wrap">
                 <View className="module">
                     <View className="txt">订单类型:</View>
-                    <View>{orderType[data?.orderType]}</View>
+                    <View>{orderTypes[data?.orderType]}</View>
                 </View>
                 <View className="module">
                     <View className="txt">订单状态:</View>

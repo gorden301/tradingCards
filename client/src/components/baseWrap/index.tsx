@@ -46,7 +46,7 @@ const BaseWrap: React.FC<IBaseWrap> = ({
     scrolltolower = () => {},
     renderFooter,
     renderHeader,
-    lowerThreshold = 20,
+    lowerThreshold = 100,
     renderOutside,
     triggered,
     effectItems,
