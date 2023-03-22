@@ -20,3 +20,17 @@
         }
     }
 }
+
+.single-wrap {
+    display: flex;
+    flex-wrap: nowrap;
+    .singleDetail {
+        display: flex;
+        margin-left: 20px;
+        flex-direction: column;
+        .imgs {
+            width: 100px;
+            height: 100px;
+        }
+    }
+}

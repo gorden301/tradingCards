@@ -10,7 +10,11 @@ const OrderDetail: React.FC<{}> = () => {
     const router = useRouter()
     const [data, setData] = useState<any>({})
     const initData = () => {
-        setData(JSON.parse(router?.params?.item as string))
+        let paramsData = JSON.parse(router?.params?.item as string)
+        if (paramsData?.singleDetailList) {
+            paramsData.singleDetailList = JSON.parse(paramsData.singleDetailList)
+        }
+        setData(paramsData)
     }
     // 预览图片
     const previewImg = (url: string) => {
@@ -51,7 +55,7 @@ const OrderDetail: React.FC<{}> = () => {
                         <View className="txt">拍卖天数:</View>
                         <View>{data?.sellDays}</View>
                     </View>}
-                    {data?.sellType != 1 &&<View className="module">
+                    {data?.sellType != 1 && <View className="module">
                         <View className="txt">期望价格:</View>
                         <View>{data?.hopePrice}</View>
                     </View>}
@@ -81,6 +85,20 @@ const OrderDetail: React.FC<{}> = () => {
                 {data?.sellNumber && <View className="module">
                     <View className="txt">已上架链接:</View>
                     <View className="url" onClick={() => goEbay(`https://www.ebay.com/itm/${data?.sellNumber}`)}>{`https://www.ebay.com/itm/${data?.sellNumber}`}</View>
+                </View>}
+                {data?.singleDetailList?.length && <View className="module">
+                    <View className="txt">客服回执图片:</View>
+                    <View className="single-wrap">
+                        {data?.singleDetailList.map((item) => {
+                            return (
+                                <View className="singleDetail">
+                                    <Image className="imgs" src={item.singleCardImgs[0]?.fileid} mode="aspectFill"></Image>
+                                    <View>{ item.cardName }</View>
+                                    <View>查看详情</View>
+                                </View>
+                            )
+                        })}
+                    </View>
                 </View>}
             </View>
         </BaseWrap>
