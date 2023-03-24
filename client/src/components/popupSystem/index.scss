@@ -1,0 +1,88 @@
+.tim-popup {touch-action: none;}
+.tim-popup-system-box {
+    width: 570px;
+    background: $white;
+    border-radius: 20px;
+    .tim-popup-header {
+        position: relative;
+        padding: 50px 50px 0;
+        box-sizing: border-box;
+        .popup-close-icon {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            &::after {
+                position: absolute;
+                left: 0;
+                top: 0;
+                content: '';
+                width: 100%;
+                height: 100%;
+                transform: scale(1.5);
+            }
+        }
+        .popup-logo {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+        }
+        .popup-tile {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            color: $color-font-3;
+            line-height: 44px;
+            white-space: pre-line;
+        }
+        .popup-content {
+            max-height: 530px;
+            overflow: scroll;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 28px;
+            color: #666666;
+            line-height: 42px;
+            text-align: left;
+            white-space: pre-line;
+        }
+    }
+    .tim-popup-footer {
+        display: flex;
+        margin-top: 50px;
+        .footer-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            box-sizing: border-box;
+            border-top: 2px solid $color-line-tab;
+            font-size: 32px;
+            font-weight: 700;
+            color: $color-base;
+            &.disabled {
+                color: #999;
+            }
+            &.concel-btn {
+                position: relative;
+                color: #999;
+                &::after {
+                    content: '';
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    width: 2px;
+                    height: 100%;
+                    background: #f0f0f0;
+                }
+            }
+        }
+    }
+}

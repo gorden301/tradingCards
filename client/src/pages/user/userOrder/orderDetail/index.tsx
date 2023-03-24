@@ -17,13 +17,13 @@ const OrderDetail: React.FC<{}> = () => {
         setData(paramsData)
     }
     // 预览图片
-    const previewImg = (url: string) => {
-        const uploadImgArr = data?.fileList?.map((item) => {
-            return item?.tempFileURL
+    const previewImg = (url: string, list) => {
+        const imgs = list.map((item: any) => {
+            return item.fileid
         })
         Taro.previewImage({
             current: url,
-            urls: uploadImgArr
+            urls: imgs
         })
     }
     const goEbay = (url: string) => {
@@ -86,15 +86,34 @@ const OrderDetail: React.FC<{}> = () => {
                     <View className="txt">已上架链接:</View>
                     <View className="url" onClick={() => goEbay(`https://www.ebay.com/itm/${data?.sellNumber}`)}>{`https://www.ebay.com/itm/${data?.sellNumber}`}</View>
                 </View>}
-                {data?.singleDetailList?.length && <View className="module">
-                    <View className="txt">客服回执图片:</View>
+                {data?.singleDetailList?.length && <View>
+                    <View className="module">
+                        <View className="txt">客服回执图片:</View>
+                    </View>
                     <View className="single-wrap">
                         {data?.singleDetailList.map((item) => {
                             return (
                                 <View className="singleDetail">
-                                    <Image className="imgs" src={item.singleCardImgs[0]?.fileid} mode="aspectFill"></Image>
-                                    <View>{ item.cardName }</View>
-                                    <View>查看详情</View>
+                                    {item.singleCardImgs?.length > 0 && <View className="wrap">
+                                        {item.singleCardImgs.map((imgs: any) => {
+                                            return (
+                                                <Image className="imgs" src={imgs?.fileid} mode="aspectFill" onClick={() => previewImg(imgs.fileid, item.singleCardImgs)}></Image>
+                                            )
+                                        })}
+                                    </View>}
+                                    <View className="wrap">
+                                        <View>卡片名称:</View>
+                                        <View>{ item.cardName }</View>
+                                    </View>
+                                    <View className="wrap">
+                                        <View>评级编号:</View>
+                                        <View>{ item.cardNo }</View>
+                                    </View>
+                                    <View className="wrap">
+                                        <View>评级分数:</View>
+                                        <View>{ item.cardPoint }</View>
+                                    </View>
+                                    <View className="look">点击图片查看大图</View>
                                 </View>
                             )
                         })}
