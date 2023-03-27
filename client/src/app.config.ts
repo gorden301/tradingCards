@@ -7,6 +7,7 @@ export default {
 		"pages/user/userInfo/index",
 		"pages/user/userOrder/index",
 		"pages/user/userAddress/index",
+        "pages/user/contactUs/index",
         "pages/user/userOrder/orderDetail/index",
 		"pages/register/index",
 		"pages/service/pages/grade/index",
@@ -22,19 +23,19 @@ export default {
 	tabBar: {
 		// custom: true,
 		color: "#999",
-		selectedColor: "#C8102E",
+		selectedColor: "#309fca",
 		list: [
 			{
 				pagePath: "pages/home/index",
 				text: "首页",
-				iconPath: "./assets/user/tab1.png",
-				selectedIconPath: "./assets/user/tab1_a.png",
+				iconPath: "./assets/user/home.png",
+				selectedIconPath: "./assets/user/selectHome.png",
 			},
 			{
 				pagePath: "pages/service/index",
-				text: "服务",
-				iconPath: "./assets/user/tab2.png",
-				selectedIconPath: "./assets/user/tab2_a.png",
+				text: "卡友圈",
+				iconPath: "./assets/user/round.png",
+				selectedIconPath: "./assets/user/selectRound.png",
 			},
 			{
 				pagePath: "pages/test/index",
@@ -46,7 +47,7 @@ export default {
 				pagePath: "pages/user/userCenter/index",
 				text: "我的",
 				iconPath: "./assets/user/tab4.png",
-				selectedIconPath: "./assets/user/tab4_a.png",
+				selectedIconPath: "./assets/user/my.png",
 			},
 		],
 	},

@@ -1,4 +1,4 @@
-import { Image, View } from "@tarojs/components"
+import { Image, View, Text } from "@tarojs/components"
 import Taro, { useRouter } from "@tarojs/taro"
 import { useEffect, useState } from "react"
 import BaseWrap from "@/components/baseWrap"
@@ -18,18 +18,30 @@ const OrderDetail: React.FC<{}> = () => {
     }
     // 预览图片
     const previewImg = (url: string, list) => {
-        const imgs = list.map((item: any) => {
-            return item.fileid
-        })
+        // const imgs = list.map((item: any) => {
+        //     return item.fileid
+        // })
         Taro.previewImage({
             current: url,
-            urls: imgs
+            urls: list
         })
     }
     const goEbay = (url: string) => {
         Taro.navigateTo({
             url: `/pages/webView/index?url=${url}`
         })
+    }
+    const copyOrderId = (id) => {
+        Taro.setClipboardData({
+            data: id,
+            success: function (res) {
+              Taro.getClipboardData({
+                success: function (res) {
+                  console.log(res.data) // data
+                }
+              })
+            }
+          })
     }
     useEffect(() => {
         initData()
@@ -38,6 +50,10 @@ const OrderDetail: React.FC<{}> = () => {
     return (
         <BaseWrap>
             <View className="detail-wrap">
+            <View className="module">
+                    <View className="txt">订单编号:</View>
+                    <View>{data?._id}<Text style="color: blue;" onClick={() => copyOrderId(data?._id)}>一键复制</Text></View>
+                </View>
                 <View className="module">
                     <View className="txt">订单类型:</View>
                     <View>{orderTypes[data?.orderType]}</View>
@@ -65,7 +81,7 @@ const OrderDetail: React.FC<{}> = () => {
                     <View>
                         {data?.fileList?.map((item) => {
                             return (
-                                <Image className="img" onClick={() => previewImg(item?.tempFileURL)} mode="aspectFill" src={item.tempFileURL}></Image>
+                                <Image className="img" onClick={() => previewImg(item?.tempFileURL, data?.fileList?.map(item => item.tempFileURL))} mode="aspectFill" src={item.tempFileURL}></Image>
                             )
                         })}
                     </View>
@@ -97,7 +113,9 @@ const OrderDetail: React.FC<{}> = () => {
                                     {item.singleCardImgs?.length > 0 && <View className="wrap">
                                         {item.singleCardImgs.map((imgs: any) => {
                                             return (
-                                                <Image className="imgs" src={imgs?.fileid} mode="aspectFill" onClick={() => previewImg(imgs.fileid, item.singleCardImgs)}></Image>
+                                                <Image className="imgs" src={imgs?.fileid} mode="aspectFill" onClick={() => previewImg(imgs.fileid, item?.singleCardImgs?.map((item: any) => {
+                                                    return item.fileid
+                                                }))}></Image>
                                             )
                                         })}
                                     </View>}

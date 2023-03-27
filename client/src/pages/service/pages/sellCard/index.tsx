@@ -44,63 +44,74 @@ const SellCard: React.FC<{}> = () => {
         })
     }
     const orderSubmit = async (e) => {
-        Taro.showLoading({
-            title: '订单提交中...',
-            mask: true
-        })
-        const orderParam = e.detail.value
-        let promiseArr: any = []
-        uploadImgArr.forEach(item => {
-            promiseArr.push(uploadCloudImage({
-                cloudPath: `orderImage/${Date.now()}-${Math.random() * 1000000}`,
-                filePath: item
-            }))
-        })
-        let upRes = await Promise.all(promiseArr)
-        // 判断所有的图片是否上传成功
-        const isAllUploadSuccess = upRes.every(item => {
-            return !item[1]
-        })
-        if (isAllUploadSuccess) {
-            console.log('上传图片成功')
-            const userInfo = Taro.getStorageSync('userInfo')
-            // userInfo的_id标识不用传，不然会覆盖数据库的自创的_id
-            delete userInfo._id
-            const fileIds = upRes.map(item => {
-                return item[0].fileID
-            })
-            const fileRes: any = await getTempalteUrl(fileIds)
-            const createRes: any = await Taro.cloud.callFunction({
-                name: 'order',
-                data: {
-                    $url: 'createOrder',
-                    createData: {
-                        // 1: 评级 2: 代卖
-                        orderType: 2,
-                        cardImgs: fileIds,
-                        fileList: fileRes?.fileList,
-                        ...orderParam
+        Taro.showModal({
+            title: '提示',
+            content: '确认是否提交订单(若没有填写物流公司及快递编号请后续完善订单)',
+            success: async (res) => {
+                if (res.confirm) {
+                    Taro.showLoading({
+                        title: '订单提交中...',
+                        mask: true
+                    })
+                    const orderParam = e.detail.value
+                    let promiseArr: any = []
+                    uploadImgArr.forEach(item => {
+                        promiseArr.push(uploadCloudImage({
+                            cloudPath: `orderImage/${Date.now()}-${Math.random() * 1000000}`,
+                            filePath: item
+                        }))
+                    })
+                    let upRes = await Promise.all(promiseArr)
+                    // 判断所有的图片是否上传成功
+                    const isAllUploadSuccess = upRes.every(item => {
+                        return !item[1]
+                    })
+                    if (isAllUploadSuccess) {
+                        console.log('上传图片成功')
+                        const userInfo = Taro.getStorageSync('userInfo')
+                        // userInfo的_id标识不用传，不然会覆盖数据库的自创的_id
+                        delete userInfo._id
+                        const fileIds = upRes.map(item => {
+                            return item[0].fileID
+                        })
+                        const fileRes: any = await getTempalteUrl(fileIds)
+                        const createRes: any = await Taro.cloud.callFunction({
+                            name: 'order',
+                            data: {
+                                $url: 'createOrder',
+                                createData: {
+                                    // 1: 评级 2: 代卖
+                                    orderType: 2,
+                                    cardImgs: fileIds,
+                                    fileList: fileRes?.fileList,
+                                    ...orderParam
+                                }
+                            }
+                        })
+                        Taro.hideLoading()
+                        if (createRes?.result?.code == 0) {
+                            Taro.showToast({
+                                title: '创建订单成功',
+                                icon: 'success',
+                                duration: 2000
+                            })
+                            Taro.reLaunch({
+                                url: '/pages/user/userOrder/index'
+                            })
+                        } else {
+                            Taro.showToast({
+                                title: createRes?.result?.msg,
+                                icon: 'error',
+                                duration: 2000
+                            })
+                            Taro.reLaunch({
+                                url: '/pages/home/index'
+                            })
+                        }
                     }
                 }
-            })
-            Taro.hideLoading()
-            if (createRes?.result?.code == 0) {
-                Taro.showToast({
-                    title: '创建订单成功',
-                    icon: 'success',
-                    duration: 2000
-                })
-            } else {
-                Taro.showToast({
-                    title: createRes?.result?.msg,
-                    icon: 'error',
-                    duration: 2000
-                })
             }
-            Taro.reLaunch({
-                url: '/pages/home/index'
-            })
-        }
+        })
         console.log('提交订单', e)
     }
     return (
@@ -166,11 +177,11 @@ const SellCard: React.FC<{}> = () => {
                                 <Input name='hopePrice' type="number" placeholder="请输入期望价格(必填,人民币)"></Input>
                             </View>}
                             <View className="register_row">
-                                <Text>快递公司</Text>
+                                <Text>物流公司</Text>
                                 <Input name='deliveryCompany' type="text" maxlength={8} placeholder="请输入快递公司(选填)"></Input>
                             </View>
                             <View className="register_row">
-                                <Text>快递编号</Text>
+                                <Text>快递单号</Text>
                                 <Input name='deliveryOrderNumbe' type="text" maxlength={30} placeholder="请输入快递订单(选填)"></Input>
                             </View>
                             <View className="comment-wrapper">
