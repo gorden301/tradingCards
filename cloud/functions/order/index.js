@@ -14,18 +14,30 @@ exports.main = async (event, context) => {
 	const app = new TcbRouter({ event });
 	// 创建订单
 	app.router("createOrder", async (ctx, next) => {
-		const { data: haveCurrentUser } = await userListCollection
+		let nickName
+		let avatarHttpsUrl
+		let phoneNumer
+		if(event.createData.isPc) {
+			nickName = event.createData.nickName
+			avatarHttpsUrl = event.createData.avatarHttpsUrl
+			phoneNumer = event.createData.phoneNumer
+		} else {
+			const { data: haveCurrentUser } = await userListCollection
 			.where({ openid: wxContext.OPENID })
 			.get();
+			nickName = haveCurrentUser[0].nickName
+			avatarHttpsUrl = haveCurrentUser[0].avatarHttpsUrl
+			phoneNumer = haveCurrentUser[0].phoneNumer
+		}
 		const createRes = await orderListCollection.add({
 			data: {
-				...event.createData,
 				orderStatus: 1,
-				nickName: haveCurrentUser[0].nickName,
-				avatarHttpsUrl: haveCurrentUser[0].avatarHttpsUrl,
-				phoneNumer: haveCurrentUser[0].phoneNumer,
+				nickName: nickName,
+				avatarHttpsUrl: avatarHttpsUrl,
+				phoneNumer: phoneNumer,
 				createTime: db.serverDate(),
-				openid: wxContext.OPENID,
+				openid: t_id,
+				...event.createData,
 			},
 		});
 		if (createRes._id) {
