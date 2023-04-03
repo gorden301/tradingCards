@@ -98,7 +98,7 @@ const UserOrder: React.FC<{}> = () => {
                         </View>
                     </View>
                     <View className="footer">
-                        <View>{formatDateTime(item.createTime)}</View>
+                        <View>{item.updateTime ? formatDateTime(item.updateTime) : formatDateTime(item.createTime)}</View>
                         <View>订单类型：{orderTypes[item.orderType]}</View>
                     </View>
                 </View>)}

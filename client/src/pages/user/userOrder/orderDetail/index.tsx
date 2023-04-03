@@ -3,7 +3,7 @@ import Taro, { useRouter } from "@tarojs/taro"
 import { useEffect, useState } from "react"
 import BaseWrap from "@/components/baseWrap"
 import { formatDateTime } from "@/utils/format"
-import { orderTypes, orderStatus, sellType } from "../constant"
+import { orderTypes, orderStatus, sellType, cardStatus } from "../constant"
 import './index.scss'
 
 const OrderDetail: React.FC<{}> = () => {
@@ -87,8 +87,8 @@ const OrderDetail: React.FC<{}> = () => {
                     </View>
                 </View>
                 <View className="module">
-                    <View className="txt">创建时间:</View>
-                    <View>{formatDateTime(data?.createTime)}</View>
+                    <View className="txt">{data?.updateTime ?  '更新时间' : '创建时间'}:</View>
+                    <View>{data?.updateTime ? formatDateTime(data?.updateTime) : formatDateTime(data?.createTime)}</View>
                 </View>
                 <View className="module">
                     <View className="txt">备注:</View>
@@ -124,8 +124,20 @@ const OrderDetail: React.FC<{}> = () => {
                                         <View>{ item.cardName }</View>
                                     </View>
                                     <View className="wrap">
+                                        <View>卡片状态:</View>
+                                        <View>{ cardStatus[item.cardStatus] }</View>
+                                    </View>
+                                    <View className="wrap">
                                         <View>评级编号:</View>
                                         <View>{ item.cardNo }</View>
+                                    </View>
+                                    <View className="wrap">
+                                        <View>入库编号:</View>
+                                        <View>{ item.cardStoreNo }</View>
+                                    </View>
+                                    <View className="wrap">
+                                        <View>评级批次:</View>
+                                        <View>{ item.cardRound }</View>
                                     </View>
                                     <View className="wrap">
                                         <View>评级分数:</View>

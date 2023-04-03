@@ -17,4 +17,14 @@ const sellType = {
 	3: "一口价"
 }
 
-export { orderTypes, orderStatus, sellType };
+ const cardStatus = {
+	1: "待评级",
+	2: "评级中",
+	3: "评级已出分正在回寄",
+	4: "评级已完成待寄出",
+	5: "评级已完成已寄出",
+	6: "卡片退回",
+	7: "转eBay代卖"
+ }
+
+export { orderTypes, orderStatus, sellType, cardStatus };
