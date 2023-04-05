@@ -36,7 +36,7 @@ exports.main = async (event, context) => {
 				avatarHttpsUrl: avatarHttpsUrl,
 				phoneNumer: phoneNumer,
 				createTime: db.serverDate(),
-				openid: t_id,
+				openid: wxContext.OPENID,
 				...event.createData,
 			},
 		});

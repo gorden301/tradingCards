@@ -31,6 +31,15 @@ const UserOrder: React.FC<{}> = () => {
         Taro.hideLoading()
         if (orderListRes?.result?.code == 0) {
             pageNo++
+            orderListRes.result.data = orderListRes?.result.data.map(item => {
+                if (item.fileList && typeof item.fileList == "string") {
+                    item.fileList = JSON.parse(item.fileList)
+                }
+                if (item.cardImgs && typeof item.cardImgs == "string") {
+                    item.cardImgs = JSON.parse(item.cardImgs)
+                }
+                return item
+            })
             setOrderList(orderList.concat(orderListRes?.result.data))
             if(orderListRes?.result.data?.length < pageSize) {
                 setNoMore(true)
@@ -57,7 +66,7 @@ const UserOrder: React.FC<{}> = () => {
             url: `/pages/user/userOrder/orderDetail/index?item=${JSON.stringify(item)}`
         })
     }
-    /*   
+    /*
         @param type
         1: 全部订单
         2: 评级订单
