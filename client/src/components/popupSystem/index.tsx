@@ -35,7 +35,7 @@ class PopupSystem extends Component {
                 <View className='tim-mask'></View>
                 <View className={`tim-popup_content tim-popup-system-box ${className}`}>
                     <View className={classNames('tim-popup-header')}>
-                        {close ? <Image onClick={onClose} className='popup-close-icon' src={`${__STATIC_URL_TIM__}/close-icon.png`} /> : ''}
+                        {/* {close ? <Image onClick={onClose} className='popup-close-icon' src={`${__STATIC_URL_TIM__}/close-icon.png`} /> : ''} */}
                         {title ? <View className='popup-tile'>{title}</View> : ''}
                         {content ? (
                             <ScrollView scrollY='true' className='popup-content' trapScroll>

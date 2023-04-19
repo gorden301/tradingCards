@@ -1,6 +1,6 @@
 import { View, Image } from "@tarojs/components"
 import { useEffect } from "react"
-import Taro from '@tarojs/taro'
+import Taro, { useShareAppMessage } from '@tarojs/taro'
 import Banner from "@/components/banner"
 import Sell from '@/assets/logo/wantSell.png'
 import Level from '@/assets/logo/wantLevel.png'
@@ -50,6 +50,9 @@ const Home: React.FC<{}> = () => {
             console.log('music', res)
         })
     }
+    useShareAppMessage(() => {
+        return {}
+    })
     useEffect(() => {
         // getUserInfo()
         getMusicInfo()

@@ -7,6 +7,7 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV }); // 使用当前云环境
 const db = cloud.database();
 const orderListCollection = db.collection("orderList");
 const userListCollection = db.collection("userList");
+const shareListCollection = db.collection("shareList");
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -54,6 +55,64 @@ exports.main = async (event, context) => {
 				msg: "订单创建失败",
 			};
 		}
+	});
+	// 创建订单
+	app.router("shareCard", async (ctx, next) => {
+		let nickName
+		let avatarHttpsUrl
+		let phoneNumer
+		const { data: haveCurrentUser } = await userListCollection
+			.where({ openid: wxContext.OPENID })
+			.get();
+			nickName = haveCurrentUser[0].nickName
+			avatarHttpsUrl = haveCurrentUser[0].avatarHttpsUrl
+			phoneNumer = haveCurrentUser[0].phoneNumer
+		const createRes = await shareListCollection.add({
+			data: {
+				nickName: nickName,
+				avatarHttpsUrl: avatarHttpsUrl,
+				phoneNumer: phoneNumer,
+				createTime: db.serverDate(),
+				openid: wxContext.OPENID,
+				...event.createData,
+			},
+		});
+		if (createRes._id) {
+			// const { data: haveCurrentUser } = await userListCollection.where({ openid: wxContext.OPENID }).get()
+			ctx.body = {
+				data: createRes,
+				code: 0,
+				msg: "分享成功",
+			};
+		} else {
+			ctx.body = {
+				data: createRes,
+				code: -1,
+				msg: "分享失败",
+			};
+		}
+	});
+	// 获取卡友圈列表
+	app.router("getShareList", async (ctx, next) => {
+		const { orderType } = event.params || {}
+		const queryMap = {
+			1: {},
+			2: {
+				orderType: 1
+			},
+			3: {
+				orderType: 2
+			}
+		}
+		const orderListRes = await shareListCollection
+			.orderBy("createTime", "desc")
+			.where(queryMap[orderType]).skip((event.params.pageNo - 1) * 10).limit(event.params.pageSize)
+			.get();
+		ctx.body = {
+			data: orderListRes.data,
+			code: 0,
+			msg: "获取成功",
+		};
 	});
 	// 获取某用户订单
 	app.router("getOrderListByOpenid", async (ctx, next) => {

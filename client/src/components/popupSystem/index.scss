@@ -1,7 +1,7 @@
 .tim-popup {touch-action: none;}
 .tim-popup-system-box {
     width: 570px;
-    background: $white;
+    background: #fff;
     border-radius: 20px;
     .tim-popup-header {
         position: relative;
@@ -35,7 +35,7 @@
             font-size: 32px;
             font-weight: 700;
             text-align: center;
-            color: $color-font-3;
+            color: #333;
             line-height: 44px;
             white-space: pre-line;
         }
@@ -63,10 +63,10 @@
             line-height: 100px;
             text-align: center;
             box-sizing: border-box;
-            border-top: 2px solid $color-line-tab;
+            border-top: 2px solid #f0f0f0;
             font-size: 32px;
             font-weight: 700;
-            color: $color-base;
+            color: #c8102e;
             &.disabled {
                 color: #999;
             }
